@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 
 const defaultState = {
   title:'',
+  body:'',
+  timeStamp:'',
+  author:'',
   posts:[]
 }
 
@@ -19,11 +22,17 @@ class App extends Component {
   }
 
   onButtonClick(){
-    const list = this.state.posts
+    const {posts} = this.state
 
-    this.setState({
-      posts:  [...list, this.state.title]
-    })
+    if (posts.length === 0) {
+      this.setState({
+        posts: [this.state.title]
+      })
+    } else {
+      this.setState({
+        posts:  [...posts, this.state.title]
+      })
+    }
   }
 
 	render() {
@@ -37,10 +46,13 @@ class App extends Component {
             </div>
             <div className="blog-form">
               <input type="text" name="title" value={this.state.title} onChange={this.updateText} placeholder="your title" />
+              <input type="textarea" name="body" value={this.state.body} onChange={this.updateText} placeholder="start writing your post" />
+              <input type="text" name="author" value={this.state.author} onChange={this.updateText} placeholder="your name" />
+              <div>{Date(Date.UTC)}</div>
               <button type="submit" className="button teal cursor-pointer" onClick={this.onButtonClick}>Submit</button>
               </div>
             <div className="posts-list">
-              {this.state.posts.map((post, i) => <div key={i}>{post}</div>)}
+              { this.state.posts.length > 0 && this.state.posts.map((post, i) => <div key={i}>{post}</div>)}
             </div>
 					</div>
 				</div>
